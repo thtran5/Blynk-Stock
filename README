@@ -1,0 +1,35 @@
+Stock Market Tracker:
+This program uses the Yahoo Finance API (via HTTP) to fetch data.
+
+Manual:
+LED Color Logic (via Blynk Virtual Pins):
+    - Blue  (V4): Market is closed
+    - Green (V3): Current price > open price (market up)
+    - Red   (V2): Current price < open price (market down)
+    - Off       : Current price = open price 
+
+LED Intensity: Scaled 0–255 based on % change (0%=0, >=2%=255)
+
+Virtual Pin Mapping:
+    V2 = Red   channel (0–255)
+    V3 = Green channel (0–255)
+    V4 = Blue  channel (0–255)
+    V10 = Debug label (string)
+    V11 = Price info string
+
+Dependencies:
+    - Go to File -> Preferences
+    - Find the "Additional boards manager URLs" field and paste this URL:
+        - http://arduino.esp8266.com/stable/package_esp8266com_index.json
+    - Go to Tools -> Board -> Boards Manager
+    - Search for esp8266
+    - Install "esp8266 by ESP8266 Community"
+    - Once installed, go back to Tools -> Board and you should now see a full list of ESP8266 boards — select "SparkFun ESP8266 Thing"
+
+How to use:
+    - Fill out secrets.h
+    - Add V10 and V11 as virtual pins of type "string"
+
+Troubleshoot:
+    - Check if Yahoo Finance API is working
+        - https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1d&range=1d 
