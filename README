@@ -6,10 +6,8 @@ LED Color Logic (via Blynk Virtual Pins):
     - Blue  (V4): Market is closed
     - Green (V3): Current price > open price (market up)
     - Red   (V2): Current price < open price (market down)
-<<<<<<< HEAD
     - Off       : Current price = open price 
-=======
->>>>>>> 97c8284927abe92721ef32e92a02a8ae2639ce35
+    - Magenta   : Error (JSON, HTTPS, etc). Check Serial Monitor to debug.
 
 LED Intensity: Scaled 0–255 based on % change (0%=0, >=2%=255)
 
@@ -21,7 +19,6 @@ Virtual Pin Mapping:
     V11 = Price info string
 
 Dependencies:
-<<<<<<< HEAD
     - Go to File -> Preferences
     - Find the "Additional boards manager URLs" field and paste this URL:
         - http://arduino.esp8266.com/stable/package_esp8266com_index.json
@@ -30,21 +27,16 @@ Dependencies:
     - Install "esp8266 by ESP8266 Community"
     - Once installed, go back to Tools -> Board and you should now see a full list of ESP8266 boards — select "SparkFun ESP8266 Thing"
 
-How to use:
-    - Fill out secrets.h
-    - Add V10 and V11 as virtual pins of type "string"
-=======
-    - Go to File → Preferences
-    - Find the "Additional boards manager URLs" field and paste this URL:
-        - http://arduino.esp8266.com/stable/package_esp8266com_index.json
-    - Go to Tools → Board → Boards Manager
-    - Search for esp8266
-    - Install "esp8266 by ESP8266 Community"
-    - Once installed, go back to Tools → Board and you should now see a full list of ESP8266 boards — select "SparkFun ESP8266 Thing"
+Libraries:
+    - Go to Sketch -> Include Library -> Manage Libraries
+    - Search up and install these two libraries
+        - Blynk by Volodymyr Shymanskyy
+        - ArduinoJson by Benoit Blanchon
 
 How to use:
-    - fill out secrets.h
->>>>>>> 97c8284927abe92721ef32e92a02a8ae2639ce35
+    - Fill out secrets.h
+    - Add V2, V3, and V4 as virtual pins of type "integer", with min value of 0, and max value of 255
+    - Add V10 and V11 as virtual pins of type "string"
 
 Troubleshoot:
     - Check if Yahoo Finance API is working
