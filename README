@@ -7,6 +7,7 @@ LED Color Logic (via Blynk Virtual Pins):
     - Green (V3): Current price > open price (market up)
     - Red   (V2): Current price < open price (market down)
     - Off       : Current price = open price 
+    - Magenta   : Error (JSON, HTTPS, etc). Check Serial Monitor to debug.
 
 LED Intensity: Scaled 0–255 based on % change (0%=0, >=2%=255)
 
@@ -18,21 +19,23 @@ Virtual Pin Mapping:
     V11 = Price info string
 
 Dependencies:
-    - Board Manager Installation: 
-        - Go to File -> Preferences
-        - Find the "Additional boards manager URLs" field and paste this URL:
-            - http://arduino.esp8266.com/stable/package_esp8266com_index.json
-        - Go to Tools -> Board -> Boards Manager
-        - Search for esp8266
-        - Install "esp8266 by ESP8266 Community"
-        - Once installed, go back to Tools -> Board and you should now see a full list of ESP8266 boards — select "SparkFun ESP8266 Thing"
-    - Library Dependencies
-        - Go to Sketch -> Include Library -> Manage Libraries
-            - Install "Blynk by Volodymyr Shymanskyy"
-            - Install "ArduinoJson by Benoit Blanchon"
+    - Go to File -> Preferences
+    - Find the "Additional boards manager URLs" field and paste this URL:
+        - http://arduino.esp8266.com/stable/package_esp8266com_index.json
+    - Go to Tools -> Board -> Boards Manager
+    - Search for esp8266
+    - Install "esp8266 by ESP8266 Community"
+    - Once installed, go back to Tools -> Board and you should now see a full list of ESP8266 boards — select "SparkFun ESP8266 Thing"
+
+Libraries:
+    - Go to Sketch -> Include Library -> Manage Libraries
+    - Search up and install these two libraries
+        - Blynk by Volodymyr Shymanskyy
+        - ArduinoJson by Benoit Blanchon
 
 How to use:
     - Fill out secrets.h
+    - Add V2, V3, and V4 as virtual pins of type "integer", with min value of 0, and max value of 255
     - Add V10 and V11 as virtual pins of type "string"
 
 Troubleshoot:

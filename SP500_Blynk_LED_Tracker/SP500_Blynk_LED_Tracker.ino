@@ -31,14 +31,14 @@ BlynkTimer timer;
  * @return           Integer brightness in range [0, 255]
  */
 int calcIntensity(float changePct) {
-  if (changePct <= 0.0f)          return 0;
+  if (changePct <= 0.0f) return 0;
   if (changePct >= MAX_CHANGE_PCT) return 255;
   return (int)lround((changePct / MAX_CHANGE_PCT) * 255.0f);
 }
 
-// check if market is open
-// return true if market is open
-// return false if market is closed
+// Check if market is open
+// Return true if market is open
+// Return false if market is closed
 bool isMarketOpen() {
   time_t now = time(nullptr);
   struct tm* t = gmtime(&now);
@@ -49,7 +49,7 @@ bool isMarketOpen() {
     return false;
   }
 
-  // convert time to minutes for calculations
+  // Convert time to minutes for calculations
   int nowMins   = t->tm_hour * 60 + t->tm_min;
   int openMins  = MARKET_OPEN_HOUR_UTC  * 60 + MARKET_OPEN_MIN_UTC;
   int closeMins = MARKET_CLOSE_HOUR_UTC * 60 + MARKET_CLOSE_MIN_UTC;
@@ -169,7 +169,7 @@ void fetchAndUpdateLED() {
   String statusLabel;
   if (changePct > 0.0f) {
     Serial.printf("[STATUS] UP   +%.2f%% -> GREEN (intensity %d)\n", changePct, intensity);
-    setLED(0, intensity, 0);
+          (0, intensity, 0);
     statusLabel = String("UP +") + String(changePct, 2) + "%";
   } else if (changePct < 0.0f) {
     Serial.printf("[STATUS] DOWN  %.2f%% -> RED   (intensity %d)\n", changePct, intensity);
