@@ -8,14 +8,6 @@
 #include <BlynkSimpleEsp8266.h>
 #include <ArduinoJson.h>
 
-// Catches the case where secrets.h was never filled in.
-static_assert(
-  !(String(BLYNK_TEMPLATE_ID)  == "TMPL_XXXXXXXXXX" ||
-    String(BLYNK_AUTH_TOKEN)   == "your_blynk_auth_token_here" ||
-    String(WIFI_SSID)          == "your_wifi_ssid_here"),
-  "Fill in all values in secrets.h before flashing!"
-);
-
 // Fixed configs
 const char*          TICKER               = "SPY";    // can change to other tickers
 const unsigned long  REFRESH_INTERVAL_MS  = 60000UL;  // 1 minute
@@ -202,6 +194,16 @@ void fetchAndUpdateLED() {
 void setup() {
   Serial.begin(9600);
   delay(500);
+
+  // Catch case where secrets.h was never filled in
+  if (String(BLYNK_TEMPLATE_ID)  == "TMPL_XXXXXXXXXX" ||
+    String(BLYNK_AUTH_TOKEN)   == "your_blynk_auth_token_here" ||
+    String(WIFI_SSID)          == "your_wifi_ssid_here") 
+  {
+    Serial.println("[ERROR] secrets.h is not filled in! FIll it out and restart");
+    ESP.deepSleep(0);
+  }
+
   Serial.println("\n[BOOT] S&P 500 Blynk LED Tracker");
   Serial.printf("[BOOT] Template : %s (%s)\n", BLYNK_TEMPLATE_NAME, BLYNK_TEMPLATE_ID);
   Serial.printf("[BOOT] SSID     : %s\n",      WIFI_SSID);

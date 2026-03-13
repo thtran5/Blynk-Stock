@@ -6,11 +6,11 @@
 #define SECRETS_H
 
 // User config
-#define BLYNK_TEMPLATE_ID   "TMPL_XXXXXXXXXX"
-#define BLYNK_TEMPLATE_NAME "SP500 Tracker"
-#define BLYNK_AUTH_TOKEN    "your_blynk_auth_token_here"
-#define WIFI_SSID           "your_wifi_ssid_here"
-#define WIFI_PASS           "your_wifi_password_here"
+#define BLYNK_TEMPLATE_ID   "TMPL2Td9RdQ2z"
+#define BLYNK_TEMPLATE_NAME "FirstLabs"
+#define BLYNK_AUTH_TOKEN    "PO54fwupFM_ZU8MNNdPECDsAKbiCBlqg"
+#define WIFI_SSID           "ubicom148"
+#define WIFI_PASS           "ubicom2020"
 
 // constants
 #define BLYNK_HOST          "blynk.cloud"
