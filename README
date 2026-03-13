@@ -41,3 +41,5 @@ How to use:
 Troubleshoot:
     - Check if Yahoo Finance API is working
         - https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1d&range=1d 
+    - Go to Blynk Dashboard and add widgets
+        - Value for V2, V3, V4, V10, and V11

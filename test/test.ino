@@ -11,6 +11,9 @@ Does not connect to internet
 #include <ArduinoJson.h>
 #include <time.h>
 
+// For testing
+struct RGB { int r, g, b; };
+
 // Fixed configs
 const char*          TICKER               = "SPY";    // can change to other tickers
 const unsigned long  REFRESH_INTERVAL_MS  = 60000UL;  // 1 minute
@@ -204,8 +207,6 @@ void test_calcIntensity() {
 }
 
 // --- LED color logic tests ---
-struct RGB { int r, g, b; };
-
 RGB simulateLEDOutput(float currentPrice, float openPrice) {
   if (openPrice == 0.0f || currentPrice == 0.0f) return {50, 0, 50}; // invalid
   
