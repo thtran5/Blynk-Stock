@@ -1,6 +1,7 @@
 /*
 Tests the logic of the program, as well as the functionality of secrets.h
-Not necessary to run
+Needs Blynk Board
+Does not connect to internet
 */
 
 #include "secrets.h"
