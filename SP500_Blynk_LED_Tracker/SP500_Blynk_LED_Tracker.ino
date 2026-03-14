@@ -8,6 +8,12 @@
 #include <BlynkSimpleEsp8266.h>
 #include <ArduinoJson.h>
 
+#include <Adafruit_NeoPixel.h> // LED information
+#define LED_PIN   4
+#define LED_COUNT 1
+
+Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+
 // Fixed configs
 const char*          TICKER               = "SPY";    // can change to other tickers
 const unsigned long  REFRESH_INTERVAL_MS  = 60000UL;  // 1 minute
@@ -54,22 +60,16 @@ bool isMarketOpen() {
   int openMins  = MARKET_OPEN_HOUR_UTC  * 60 + MARKET_OPEN_MIN_UTC;
   int closeMins = MARKET_CLOSE_HOUR_UTC * 60 + MARKET_CLOSE_MIN_UTC;
 
-  bool open = (nowMins >= openMins && nowMins < closeMins);
+  bool open = (nowMins >= openMins && nowMins < closeMins); 
   Serial.printf("[MARKET] UTC %02d:%02d -> Market %s\n",
                 t->tm_hour, t->tm_min, open ? "OPEN" : "CLOSED");
   return open;
 }
 
-// Writes RGB values to Blynk virtual pins V2/V3/V4.
-// Skips the write and logs a warning if Blynk is not currently connected.
+// sets RGB value of LED and prints
 void setLED(int r, int g, int b) {
-  if (!Blynk.connected()) {
-    Serial.println("[WARN] Blynk disconnected -- skipping LED update.");
-    return;
-  }
-  Blynk.virtualWrite(V2, r);
-  Blynk.virtualWrite(V3, g);
-  Blynk.virtualWrite(V4, b);
+  strip.setPixelColor(0, strip.Color(r, g, b));
+  strip.show();
   Serial.printf("[LED] R=%d  G=%d  B=%d\n", r, g, b);
 }
 
@@ -169,7 +169,7 @@ void fetchAndUpdateLED() {
   String statusLabel;
   if (changePct > 0.0f) {
     Serial.printf("[STATUS] UP   +%.2f%% -> GREEN (intensity %d)\n", changePct, intensity);
-          (0, intensity, 0);
+    setLED(0, intensity, 0);
     statusLabel = String("UP +") + String(changePct, 2) + "%";
   } else if (changePct < 0.0f) {
     Serial.printf("[STATUS] DOWN  %.2f%% -> RED   (intensity %d)\n", changePct, intensity);
@@ -195,18 +195,21 @@ void setup() {
   Serial.begin(9600);
   delay(500);
 
+  // Initialize NeoPixel
+  strip.begin();
+  strip.show();  // initialize to off
+
   // Catch case where secrets.h was never filled in
   if (String(BLYNK_TEMPLATE_ID)  == "TMPL_XXXXXXXXXX" ||
     String(BLYNK_AUTH_TOKEN)   == "your_blynk_auth_token_here" ||
     String(WIFI_SSID)          == "your_wifi_ssid_here") 
   {
     Serial.println("[ERROR] secrets.h is not filled in! FIll it out and restart");
-    ESP.deepSleep(0);
   }
 
   Serial.println("\n[BOOT] S&P 500 Blynk LED Tracker");
   Serial.printf("[BOOT] Template : %s (%s)\n", BLYNK_TEMPLATE_NAME, BLYNK_TEMPLATE_ID);
-  Serial.printf("[BOOT] SSID     : %s\n",      WIFI_SSID);
+  Serial.printf("[BOOT] SSID     : %s\n", WIFI_SSID);
   Serial.printf("[BOOT] Host     : %s  Port: %d\n", BLYNK_HOST, BLYNK_PORT);
   Serial.println("[BOOT] Connecting...");
 
@@ -222,11 +225,9 @@ void setup() {
   Serial.println(" done.");
 
   fetchAndUpdateLED();
-
   timer.setInterval(REFRESH_INTERVAL_MS, fetchAndUpdateLED);
   Serial.printf("[TIMER] Refresh every %lu ms\n", REFRESH_INTERVAL_MS);
 }
-
 void loop() {
   Blynk.run();
   timer.run();
